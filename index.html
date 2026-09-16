@@ -420,7 +420,7 @@
                 flex-direction: row;
                 overflow-x: auto;
                 overflow-y: hidden;
-                padding: 40px 8px 8px 8px; /* Espacio superior para que la manija absoluta no tape contenido */
+                padding: 40px 8px 8px 8px; 
                 background: rgba(5, 5, 5, 0.98);
                 border-top: 2px solid #e2c068;
                 gap: 10px;
@@ -537,7 +537,7 @@
             "leparc-alquimia338": "media/leparc-alquimia338.jpg",
             "leparc-modulacion48": "media/leparc-modulacion48.jpg",
             "kenneth-paisajecompacto": "media/kenneth-paisajecompacto.jpg",
-            "Kenneth-paisajesimaginados": "media/Kenneth-paisajesimaginados.jpg",
+            "kenneth-paisajesimaginados": "media/kenneth-paisajesimaginados.jpg", /* <--- Corregido a minúscula */
             "yente-curvilinea": "media/yente-curvilinea.jpg",
             "yente-impresionismoabstracto": "media/yente-impresionismoabstracto.jpg",
             "aizenberg-sueño": "media/aizenberg-sueno.jpg",
@@ -577,7 +577,7 @@
                 colorBg: "#2b2b1a",
                 bio: "Kenneth Kemble (1923–1998) principal exponente del Informalismo argentino. Pionero absoluto en el uso de collages, ensamblajes y materiales de desecho.",
                 works: [
-                    { title: "Paisajes imaginados", year: "1974", style: "Abstracción matérica", key: "Kenneth-paisajesimaginados" },
+                    { title: "Paisajes imaginados", year: "1974", style: "Abstracción matérica", key: "kenneth-paisajesimaginados" },
                     { title: "Paisaje compacto", year: "1988", style: "Informalismo", key: "kenneth-paisajecompacto" }
                 ]
             },
@@ -618,7 +618,6 @@
         }
 
         function renderCatalogs() {
-            // Mantenemos la manija y limpiamos el resto del contenido dinámico del panel izquierdo
             leftPanel.innerHTML = '<div class="mobile-drag-handle" id="drag-handle" title="Deslizar panel"></div>';
             rightPanel.innerHTML = '';
 
