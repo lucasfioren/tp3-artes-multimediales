@@ -362,6 +362,10 @@
             pointer-events: none;
         }
 
+        .mobile-drag-handle {
+            display: none;
+        }
+
         /* ========================================================
            ADAPTACIÓN RESPONSIVE PARA CELULARES Y TABLETS (VERTICAL)
            ======================================================== */
@@ -391,7 +395,7 @@
                 left: 0;
                 top: 52px;
                 width: 100%;
-                height: 44vh;
+                height: 90vh;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -404,9 +408,11 @@
                 border-width: 12px;
             }
 
+            /* Panel inferior deslizable (Bottom Sheet) */
             .side-panel {
                 top: auto;
                 bottom: 0;
+                transform: translateY(calc(50vh - 35px)); 
                 left: 0 !important;
                 right: 0 !important;
                 width: 100%;
@@ -414,11 +420,42 @@
                 flex-direction: row;
                 overflow-x: auto;
                 overflow-y: hidden;
-                padding: 8px;
+                padding: 40px 8px 8px 8px; /* Espacio superior para que la manija absoluta no tape contenido */
                 background: rgba(5, 5, 5, 0.98);
-                border-top: 1px solid #333;
+                border-top: 2px solid #e2c068;
                 gap: 10px;
                 align-items: stretch;
+                transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+                z-index: 100;
+            }
+
+            .side-panel.expanded {
+                transform: translateY(0);
+            }
+
+            /* Manija absoluta dentro del panel, pegada al tope superior de la sección */
+            .mobile-drag-handle {
+                display: flex;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 32px;
+                background: rgba(20, 20, 22, 0.95);
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                z-index: 115;
+                border-bottom: 1px solid #333;
+            }
+
+            .mobile-drag-handle::after {
+                content: '';
+                width: 50px;
+                height: 5px;
+                background: #e2c068;
+                border-radius: 3px;
+                box-shadow: 0 0 6px rgba(226, 192, 104, 0.8);
             }
 
             #left-panel {
@@ -477,12 +514,16 @@
 
     <button id="reset-btn">Comenzar de nuevo</button>
 
-    <div class="side-panel" id="left-panel"></div>
+    <div class="side-panel" id="left-panel">
+        <div class="mobile-drag-handle" id="drag-handle" title="Deslizar panel"></div>
+    </div>
+    
     <div id="center-fusion-zone">
         <div class="historic-frame">
             <div class="canvas-interior" id="fusion-canvas"></div>
         </div>
     </div>
+    
     <div class="side-panel" id="right-panel"></div>
 
     <div class="instructions">[ CLIC EN NOMBRE PARA BIO • HOVER EN CHIPS O IMAGEN: NEGATIVO + TRAZO • CLIC PARA TRAZAR ]</div>
@@ -577,11 +618,13 @@
         }
 
         function renderCatalogs() {
-            leftPanel.innerHTML = '';
+            // Mantenemos la manija y limpiamos el resto del contenido dinámico del panel izquierdo
+            leftPanel.innerHTML = '<div class="mobile-drag-handle" id="drag-handle" title="Deslizar panel"></div>';
             rightPanel.innerHTML = '';
 
             if (window.innerWidth <= 900) {
                 authorsData.forEach(author => buildAuthorGroup(author, leftPanel));
+                setupMobileSheetBehavior();
             } else {
                 const midpoint = Math.ceil(authorsData.length / 2);
                 const leftAuthors = authorsData.slice(0, midpoint);
@@ -590,6 +633,16 @@
                 leftAuthors.forEach(author => buildAuthorGroup(author, leftPanel));
                 rightAuthors.forEach(author => buildAuthorGroup(author, rightPanel));
             }
+        }
+
+        function setupMobileSheetBehavior() {
+            const panel = document.getElementById('left-panel');
+            const handle = document.getElementById('drag-handle');
+
+            handle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                panel.classList.toggle('expanded');
+            });
         }
 
         function buildAuthorGroup(authorObj, container) {
