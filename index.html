@@ -96,7 +96,7 @@
             color: #111;
         }
 
-        /* --- ZONAS LATERALES (CATÁLOGOS) --- */
+        /* --- ZONAS LATERALES (CATÁLOGOS DESKTOP) --- */
         .side-panel {
             position: absolute;
             top: 0;
@@ -124,6 +124,7 @@
             border-radius: 4px;
             padding: 6px;
             background: rgba(20, 20, 20, 0.6);
+            flex-shrink: 0;
         }
 
         .author-header-wrapper {
@@ -197,7 +198,7 @@
         .card-square-container {
             position: relative;
             width: 100%;
-            padding-bottom: 100%;
+            padding-bottom: 85%; 
             overflow: hidden;
             background: #000;
             cursor: crosshair;
@@ -221,6 +222,7 @@
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.1s ease;
+            object-fit: cover;
         }
 
         .card-square-container.active-negative .hover-negative-canvas {
@@ -350,14 +352,119 @@
 
         .instructions {
             position: absolute;
-            bottom: 10px;
+            bottom: 5px;
             width: 100%;
             text-align: center;
             color: #666;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             z-index: 10;
             letter-spacing: 1px;
             pointer-events: none;
+        }
+
+        /* ========================================================
+           ADAPTACIÓN RESPONSIVE PARA CELULARES Y TABLETS (VERTICAL)
+           ======================================================== */
+        @media (max-width: 900px) {
+            body, html {
+                overflow: hidden;
+            }
+
+            .top-container {
+                left: 0;
+                width: 100%;
+                height: 45px;
+                top: 5px;
+            }
+
+            .main-title {
+                font-size: 1.1rem;
+            }
+
+            #reset-btn {
+                top: 48px;
+                font-size: 0.5rem;
+                padding: 2px 8px;
+            }
+
+            #center-fusion-zone {
+                left: 0;
+                top: 52px;
+                width: 100%;
+                height: 44vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .historic-frame {
+                width: 92%;
+                height: 94%;
+                top: 0;
+                border-width: 12px;
+            }
+
+            .side-panel {
+                top: auto;
+                bottom: 0;
+                left: 0 !important;
+                right: 0 !important;
+                width: 100%;
+                height: 50vh;
+                flex-direction: row;
+                overflow-x: auto;
+                overflow-y: hidden;
+                padding: 8px;
+                background: rgba(5, 5, 5, 0.98);
+                border-top: 1px solid #333;
+                gap: 10px;
+                align-items: stretch;
+            }
+
+            #left-panel {
+                display: flex; 
+            }
+
+            #right-panel {
+                display: none; 
+            }
+
+            .side-panel::-webkit-scrollbar {
+                height: 6px;
+            }
+            .side-panel::-webkit-scrollbar-thumb {
+                background: #e2c068;
+                border-radius: 4px;
+            }
+
+            .author-group-card {
+                min-width: 180px;
+                max-width: 180px;
+                height: 100%;
+                overflow-y: auto;
+                flex-shrink: 0;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .author-group-card::-webkit-scrollbar {
+                width: 3px;
+            }
+            .author-group-card::-webkit-scrollbar-thumb {
+                background: #444;
+                border-radius: 3px;
+            }
+
+            .catalog-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                width: 100%;
+            }
+
+            .instructions {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -386,8 +493,8 @@
             "xul-contrapunto": "media/xul-contrapunto.jpg",
             "gimenez-2gatos": "media/gimenez-2gatos.jpg",
             "gimenez-nohabra": "media/gimenez-nohabra.jpg",
-            "leparc-alquimia338": "media/leparc-alquimia338.png",
-            "leparc-modulacion48": "media/leparc-modulacion48.png",
+            "leparc-alquimia338": "media/leparc-alquimia338.jpg",
+            "leparc-modulacion48": "media/leparc-modulacion48.jpg",
             "kenneth-paisajecompacto": "media/kenneth-paisajecompacto.jpg",
             "Kenneth-paisajesimaginados": "media/Kenneth-paisajesimaginados.jpg",
             "yente-curvilinea": "media/yente-curvilinea.jpg",
@@ -470,12 +577,19 @@
         }
 
         function renderCatalogs() {
-            const midpoint = Math.ceil(authorsData.length / 2);
-            const leftAuthors = authorsData.slice(0, midpoint);
-            const rightAuthors = authorsData.slice(midpoint);
+            leftPanel.innerHTML = '';
+            rightPanel.innerHTML = '';
 
-            leftAuthors.forEach(author => buildAuthorGroup(author, leftPanel));
-            rightAuthors.forEach(author => buildAuthorGroup(author, rightPanel));
+            if (window.innerWidth <= 900) {
+                authorsData.forEach(author => buildAuthorGroup(author, leftPanel));
+            } else {
+                const midpoint = Math.ceil(authorsData.length / 2);
+                const leftAuthors = authorsData.slice(0, midpoint);
+                const rightAuthors = authorsData.slice(midpoint);
+
+                leftAuthors.forEach(author => buildAuthorGroup(author, leftPanel));
+                rightAuthors.forEach(author => buildAuthorGroup(author, rightPanel));
+            }
         }
 
         function buildAuthorGroup(authorObj, container) {
@@ -764,7 +878,6 @@
             img.src = imageUrl;
             wrapper.appendChild(img);
 
-            // Variabilidad de tamaños: distribuido entre pequeño (200px), mediano (320px) y grande (460px)
             const sizes = [200, 200, 320, 320, 320, 460];
             const randomSize = sizes[Math.floor(Math.random() * sizes.length)];
             wrapper.style.setProperty('--piece-size', `${randomSize}px`);
@@ -789,6 +902,10 @@
         });
 
         window.addEventListener('DOMContentLoaded', () => {
+            renderCatalogs();
+        });
+
+        window.addEventListener('resize', () => {
             renderCatalogs();
         });
     </script>
