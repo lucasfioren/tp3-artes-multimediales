@@ -81,7 +81,6 @@ const themeToggleBtn = document.getElementById('theme-toggle-btn');
 
 let interactionStarted = false;
 
-// Lógica de cambio de Modo Oscuro / Modo Claro
 themeToggleBtn.addEventListener('click', () => {
     if (document.body.classList.contains('dark-mode')) {
         document.body.classList.remove('dark-mode');

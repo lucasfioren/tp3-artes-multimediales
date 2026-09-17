@@ -13,7 +13,6 @@
     --btn-bg: #2a2014;
     --btn-color: #e2c068;
     --btn-border: #e2c068;
-    /* Fondo del canvas / obra central en Modo Oscuro */
     --canvas-bg-color: #12100e;
     --canvas-bg-gradient: radial-gradient(circle at center, #1c1814 0%, #080706 100%);
 }
@@ -33,7 +32,6 @@ body.light-mode {
     --btn-bg: #e2c068;
     --btn-color: #2a2014;
     --btn-border: #a88632;
-    /* Fondo del canvas / obra central en Modo Claro (Blanco puro y gradiente suave claro) */
     --canvas-bg-color: #ffffff;
     --canvas-bg-gradient: radial-gradient(circle at center, #ffffff 0%, #f0ecdf 100%);
 }
@@ -54,36 +52,13 @@ body, html {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* --- BOTÓN DE MODO CLARO / OSCURO (SUPERIOR DERECHA) --- */
-#theme-toggle-btn {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    background: var(--btn-bg);
-    color: var(--btn-color);
-    border: 1px solid var(--btn-border);
-    padding: 5px 12px;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 0.65rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer;
-    z-index: 50;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-    transition: all 0.2s;
-}
-
-#theme-toggle-btn:hover {
-    filter: brightness(1.2);
-}
-
 /* --- ZONA SUPERIOR Y TÍTULOS --- */
 .top-container {
     position: absolute;
     top: 0;
     left: 27%;
     width: 46%;
-    height: 65px;
+    height: 48px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -94,7 +69,7 @@ body, html {
 
 .main-title {
     font-family: 'Montserrat', sans-serif;
-    font-size: 1.5rem;
+    font-size: 1.35rem;
     letter-spacing: 3px;
     color: #e2c068;
     text-transform: uppercase;
@@ -104,11 +79,11 @@ body, html {
 }
 
 .subtitle {
-    font-size: 0.65rem;
+    font-size: 0.55rem;
     color: var(--subtitle-color);
     letter-spacing: 2px;
     text-transform: uppercase;
-    margin-top: 2px;
+    margin-top: 1px;
     transition: opacity 0.4s ease;
 }
 
@@ -119,15 +94,15 @@ body, html {
 
 #reset-btn {
     position: absolute;
-    top: 68px;
+    top: 50px;
     left: 50%;
     transform: translateX(-50%);
     background: var(--btn-bg);
     color: var(--btn-color);
     border: 1px solid var(--btn-border);
-    padding: 4px 12px;
+    padding: 3px 10px;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 0.65rem;
+    font-size: 0.58rem;
     text-transform: uppercase;
     letter-spacing: 1px;
     cursor: pointer;
@@ -143,7 +118,7 @@ body, html {
     pointer-events: auto;
 }
 
-/* --- BOTÓN DE DESCARGA DE OBRA --- */
+/* --- BOTONES INFERIORES SIMÉTRICOS (GUARDAR Y MODO) --- */
 #download-btn {
     position: absolute;
     bottom: 25px;
@@ -169,17 +144,39 @@ body, html {
     pointer-events: auto;
 }
 
+#theme-toggle-btn {
+    position: absolute;
+    bottom: 25px;
+    right: 29%;
+    background: var(--btn-bg);
+    color: var(--btn-color);
+    border: 1px solid var(--btn-border);
+    padding: 6px 14px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    z-index: 50;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    transition: all 0.2s;
+}
+
+#theme-toggle-btn:hover {
+    filter: brightness(1.2);
+}
+
 /* --- ZONAS LATERALES (CATÁLOGOS DESKTOP) --- */
 .side-panel {
     position: absolute;
     top: 0;
     width: 27%;
     height: 100%;
-    padding: 10px;
-    padding-top: 65px;
+    padding: 6px;
+    padding-top: 42px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 6px;
     opacity: 0.95;
     transition: opacity 0.5s, background 0.3s;
     z-index: 5;
@@ -195,7 +192,7 @@ body, html {
 .author-group-card {
     border: 1px solid var(--card-border);
     border-radius: 4px;
-    padding: 6px;
+    padding: 4px;
     background: var(--card-bg);
     flex-shrink: 0;
     transition: background 0.3s, border 0.3s;
@@ -203,16 +200,16 @@ body, html {
 
 .author-header-wrapper {
     position: relative;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
 }
 
 .author-header {
-    font-size: 0.68rem;
+    font-size: 0.65rem;
     text-transform: uppercase;
     letter-spacing: 1px;
     font-weight: bold;
     text-align: center;
-    padding: 6px;
+    padding: 4px;
     border-radius: 3px;
     cursor: pointer;
     user-select: none;
@@ -223,6 +220,7 @@ body, html {
     filter: brightness(1.2);
 }
 
+/* Tooltip / Bio con tipografía más grande */
 .author-alert-tooltip {
     position: relative;
     width: 100%;
@@ -230,17 +228,17 @@ body, html {
     overflow: hidden;
     background: var(--tooltip-bg);
     color: var(--tooltip-text);
-    padding: 0 8px;
-    font-size: 0.54rem;
-    line-height: 1.4;
+    padding: 0 10px;
+    font-size: 0.66rem;
+    line-height: 1.45;
     border-radius: 0 0 3px 3px;
     transition: max-height 0.35s ease, padding 0.35s ease, border 0.35s ease, background 0.3s, color 0.3s;
     border: none;
 }
 
 .author-header-wrapper.active-bio .author-alert-tooltip {
-    max-height: 200px;
-    padding: 8px;
+    max-height: 220px;
+    padding: 8px 10px;
     border: 1px solid #e2c068;
     border-top: none;
 }
@@ -257,14 +255,14 @@ body, html {
 .catalog-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 6px;
+    gap: 4px;
     width: 100%;
 }
 
 .source-card {
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid var(--card-border);
-    padding: 4px;
+    padding: 3px;
     display: flex;
     flex-direction: column;
 }
@@ -306,12 +304,12 @@ body, html {
 
 .color-layers-bar {
     display: flex;
-    height: 12px;
+    height: 10px;
     width: 100%;
-    margin-top: 3px;
+    margin-top: 2px;
     gap: 2px;
     background: #111;
-    padding: 2px;
+    padding: 1px;
     border: 1px solid #222;
 }
 
@@ -331,16 +329,16 @@ body, html {
 }
 
 .meta-info-container {
-    margin-top: 3px;
-    padding-top: 2px;
+    margin-top: 2px;
+    padding-top: 1px;
     border-top: 1px solid rgba(255,255,255,0.06);
     display: flex;
     flex-direction: column;
-    gap: 1px;
+    gap: 0px;
 }
 
 .meta-title {
-    font-size: 0.58rem;
+    font-size: 0.55rem;
     color: #e2c068;
     font-weight: bold;
     white-space: nowrap;
@@ -349,7 +347,7 @@ body, html {
 }
 
 .meta-details {
-    font-size: 0.5rem;
+    font-size: 0.48rem;
     color: var(--meta-details-color);
     display: flex;
     justify-content: space-between;
@@ -452,6 +450,7 @@ body, html {
     }
 
     #theme-toggle-btn {
+        bottom: auto;
         top: 8px;
         right: 10px;
         font-size: 0.55rem;
